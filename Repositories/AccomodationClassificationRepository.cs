@@ -14,6 +14,24 @@ public class AccomodationClassificationRepository : IAccomodationClassificationR
         _context = context;
     }
 
+    public async Task<(List<AccomodationClassification>, int)> GetPaginatedAsync(int pageNumber, int pageSize, string searchTerm)
+    {
+        var query = _context.AccomodationClassifications.AsQueryable();
+
+        if (!string.IsNullOrEmpty(searchTerm))
+        {
+            query = query.Where(m => m.Name.Contains(searchTerm));
+        }
+
+        var totalCount = await query.CountAsync();
+        var accomodationClassifications = await query
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (accomodationClassifications, totalCount);
+    }
+
     public async Task<List<AccomodationClassification>> GetAllAsync()
     {
         return await _context.AccomodationClassifications.ToListAsync();

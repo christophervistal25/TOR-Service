@@ -16,6 +16,25 @@ public class EstablishmentController : ControllerBase
     {
         _establishmentRepository = establishmentRepository;
     }
+    
+    [HttpGet]
+    [Route("paginated")]
+    public async Task<IActionResult> GetPaginated([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10, [FromQuery] string searchTerm = "")
+    {
+        var (establishments, totalCount) = await _establishmentRepository.GetPaginatedAsync(pageNumber, pageSize, searchTerm);
+        var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+        var response = new PaginatedResponseDTO<EstablishmentDTO>
+        {
+            TotalCount = totalCount,
+            TotalPages = totalPages,
+            currentPage = pageNumber,
+            term = searchTerm,
+            Data = establishments.Select(x => x.EstablishmentToDTO()).ToList()
+        };
+
+        return Ok(response);
+    }
 
     [HttpGet]
     public async Task<IActionResult> Get()

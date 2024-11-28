@@ -35,7 +35,12 @@ public static class EstablishmentMapper
             Address = establishmentDTO.Address,
             Contact = establishmentDTO.Contact,
             Email = establishmentDTO.Email,
-            Municipality = new Municipality { Id = establishmentDTO.MunicipalityId }, // Ensure Municipality exists
+            Municipality = new Municipality
+            {
+                Id = establishmentDTO.MunicipalityId,
+                Name = establishmentDTO.Municipality.Name,
+                
+            }, 
             Category = establishmentDTO.Category,
             Status = establishmentDTO.Status,
             DateCreated = establishmentDTO.DateCreated

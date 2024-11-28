@@ -145,3 +145,4 @@
 /Users/surigaodelsur/Desktop/Projects/TOR-service/TOR.API/bin/Debug/net8.0/Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
 /Users/surigaodelsur/Desktop/Projects/TOR-service/TOR.API/bin/Debug/net8.0/Newtonsoft.Json.dll
 /Users/surigaodelsur/Desktop/Projects/TOR-service/TOR.API/bin/Debug/net8.0/Newtonsoft.Json.Bson.dll
+/Users/surigaodelsur/Desktop/Projects/TOR-service/TOR.API/obj/Debug/net8.0/TOR.API.sourcelink.json

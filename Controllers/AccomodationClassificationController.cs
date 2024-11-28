@@ -18,6 +18,25 @@ public class AccomodationClassificationController : ControllerBase
     }
 
     [HttpGet]
+    [Route("paginated")]
+    public async Task<IActionResult> GetPaginated([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10, [FromQuery] string searchTerm = "")
+    {
+        var (accomodation, totalCount) = await _classificationRepository.GetPaginatedAsync(pageNumber, pageSize, searchTerm);
+        var totalPages = (int)Math.Ceiling(totalCount / (double)pageSize);
+
+        var response = new PaginatedResponseDTO<AccomodationClassificationDTO>
+        {
+            TotalCount = totalCount,
+            TotalPages = totalPages,
+            currentPage = pageNumber,
+            term = searchTerm,
+            Data = accomodation.Select(x => x.ToDTO()).ToList()
+        };
+
+        return Ok(response);
+    }
+    
+    [HttpGet]
     public async Task<IActionResult> Get()
     {
         var classifications = await _classificationRepository.GetAllAsync();
@@ -31,6 +50,8 @@ public class AccomodationClassificationController : ControllerBase
         if (classification == null) return NotFound();
         return Ok(classification.ToDTO());
     }
+    
+    
 
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] AccomodationClassificationDTO classificationDTO)
