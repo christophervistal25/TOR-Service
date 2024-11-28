@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TOR.API.Data;
@@ -41,6 +42,7 @@ public class MunicipalityController : ControllerBase
     
     
     [HttpGet]
+    [Authorize]
     public async Task<IActionResult> Get()
     {
         var municipalities = await _municipalityRepository.GetAllAsync();

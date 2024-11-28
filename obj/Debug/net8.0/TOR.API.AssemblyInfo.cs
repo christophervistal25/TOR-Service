@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TOR.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3289dc23e4c35cb349f74ba08fe995a90ed5eb93")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4287bd5411855540345932be5dc79c54266b950a")]
 [assembly: System.Reflection.AssemblyProductAttribute("TOR.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TOR.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
