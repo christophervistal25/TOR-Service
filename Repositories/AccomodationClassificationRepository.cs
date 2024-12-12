@@ -25,6 +25,7 @@ public class AccomodationClassificationRepository : IAccomodationClassificationR
 
         var totalCount = await query.CountAsync();
         var accomodationClassifications = await query
+            .Where(q => q.Status == "Active")
             .Skip((pageNumber - 1) * pageSize)
             .Take(pageSize)
             .ToListAsync();
@@ -65,7 +66,7 @@ public class AccomodationClassificationRepository : IAccomodationClassificationR
 
     public async Task<AccomodationClassification> DeleteAsync(int id)
     {
-        var classification = await _context.AccomodationClassifications.FindAsync(id);
+        var classification = await _context.AccomodationClassifications.FirstAsync(classi => classi.Id == id);
         if (classification == null) return null;
 
         _context.AccomodationClassifications.Remove(classification);

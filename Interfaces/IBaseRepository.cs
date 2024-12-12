@@ -1,3 +1,5 @@
+using TOR.API.Models;
+
 namespace TOR.API.Repositories;
 
 public interface IBaseRepository<T>

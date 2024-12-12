@@ -2,7 +2,7 @@ namespace TOR.API.DTOs;
 
 public class UserDTO
 {
-    public int Id { get; set; }
+    public string? Id { get; set; }
     public string Firstname { get; set; } = string.Empty;
     public string Middlename { get; set; } = string.Empty;
     public string Lastname { get; set; } = string.Empty;
@@ -15,5 +15,10 @@ public class UserDTO
     public DateTime DateCreated { get; set; } = DateTime.UtcNow;
     public int? MunicipalityId { get; set; }
     public int? EstablishmentId { get; set; }
+    
+    public MunicipalityDTO? Municipality { get; set; }
+    
+    public EstablishmentDTO? Establishment { get; set; }
+    
     public string Password { get; set; } = string.Empty;
 }

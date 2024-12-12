@@ -12,8 +12,8 @@ using TOR.API.Data;
 namespace TOR.API.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20241128160439_SeedRole")]
-    partial class SeedRole
+    [Migration("20241203081245_AddAccomodationSeeder")]
+    partial class AddAccomodationSeeder
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,162 @@ namespace TOR.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AccomodationClassification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccomodationClassifications");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "HTL",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 12, 45, 704, DateTimeKind.Utc).AddTicks(9430),
+                            Name = "Hotel",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "CON",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 12, 45, 704, DateTimeKind.Utc).AddTicks(9430),
+                            Name = "Condotel",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Code = "SER",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 12, 45, 704, DateTimeKind.Utc).AddTicks(9440),
+                            Name = "Serviced Residence",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Code = "RES",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 12, 45, 704, DateTimeKind.Utc).AddTicks(9440),
+                            Name = "Resort",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Code = "APA",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 12, 45, 704, DateTimeKind.Utc).AddTicks(9440),
+                            Name = "Apartelle",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Code = "MOT",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 12, 45, 704, DateTimeKind.Utc).AddTicks(9440),
+                            Name = "Motel",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Code = "PEN",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 12, 45, 704, DateTimeKind.Utc).AddTicks(9440),
+                            Name = "Pension House",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Code = "HSS",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 12, 45, 704, DateTimeKind.Utc).AddTicks(9440),
+                            Name = "Home Stay Site",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Code = "TIN",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 12, 45, 704, DateTimeKind.Utc).AddTicks(9440),
+                            Name = "Tourist Inn",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Code = "OTH",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 12, 45, 704, DateTimeKind.Utc).AddTicks(9440),
+                            Name = "Others",
+                            Status = "Active"
+                        });
+                });
+
+            modelBuilder.Entity("Establishment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccomodationClassificationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Contact")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MunicipalityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccomodationClassificationId");
+
+                    b.HasIndex("MunicipalityId");
+
+                    b.ToTable("Establishments");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -54,13 +210,13 @@ namespace TOR.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f3258617-f5e3-4f63-9158-8766f15d65d1",
+                            Id = "84282cae-a3ab-400a-92aa-0294de073550",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "5424a303-29d8-496e-9128-3616a507b9b3",
+                            Id = "73343e09-05f2-4bd6-a8d6-f5fa7d97de43",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -172,34 +328,6 @@ namespace TOR.API.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("TOR.API.Models.AccomodationClassification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AccomodationClassifications");
-                });
-
             modelBuilder.Entity("TOR.API.Models.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -227,51 +355,6 @@ namespace TOR.API.Migrations
                     b.HasIndex("StockId");
 
                     b.ToTable("Comment");
-                });
-
-            modelBuilder.Entity("TOR.API.Models.Establishment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Contact")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MunicipalityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MunicipalityId");
-
-                    b.ToTable("Establishments");
                 });
 
             modelBuilder.Entity("TOR.API.Models.Municipality", b =>
@@ -444,6 +527,25 @@ namespace TOR.API.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Establishment", b =>
+                {
+                    b.HasOne("AccomodationClassification", "AccomodationClassification")
+                        .WithMany()
+                        .HasForeignKey("AccomodationClassificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TOR.API.Models.Municipality", "Municipality")
+                        .WithMany()
+                        .HasForeignKey("MunicipalityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AccomodationClassification");
+
+                    b.Navigation("Municipality");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -504,20 +606,9 @@ namespace TOR.API.Migrations
                     b.Navigation("Stock");
                 });
 
-            modelBuilder.Entity("TOR.API.Models.Establishment", b =>
-                {
-                    b.HasOne("TOR.API.Models.Municipality", "Municipality")
-                        .WithMany()
-                        .HasForeignKey("MunicipalityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Municipality");
-                });
-
             modelBuilder.Entity("User", b =>
                 {
-                    b.HasOne("TOR.API.Models.Establishment", "Establishment")
+                    b.HasOne("Establishment", "Establishment")
                         .WithMany()
                         .HasForeignKey("EstablishmentId");
 

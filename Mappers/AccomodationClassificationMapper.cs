@@ -25,7 +25,7 @@ public static class AccomodationClassificationMapper
             Name = classificationDTO.Name,
             Code = classificationDTO.Code,
             Status = classificationDTO.Status,
-            DateCreated = classificationDTO.DateCreated
+            DateCreated = classificationDTO.DateCreated,
         };
     }
 }

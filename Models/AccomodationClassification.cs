@@ -1,5 +1,4 @@
-namespace TOR.API.Models;
-
+// AccomodationClassification.cs
 public class AccomodationClassification
 {
     public int Id { get; set; }

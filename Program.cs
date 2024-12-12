@@ -55,6 +55,8 @@ builder.Services.AddDbContext<ApplicationDBContext>(option =>
     option.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+
+
 builder.Services.AddIdentity<User, IdentityRole>(options =>
     {
         options.Password.RequireDigit = true;
@@ -86,6 +88,7 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:SigningKey"])),
     };
 });
+
 // Add CORS policy
 builder.Services.AddCors(options =>
 {
@@ -98,12 +101,12 @@ builder.Services.AddCors(options =>
         });
 });
 
-// builder.Services.AddScoped<IStockRepository, StockRepository>();
 builder.Services.AddScoped<IMunicipalityRepository, MunicipalityRepository>();
 builder.Services.AddScoped<IEstablishmentRepository, EstablishmentRepository>();
 builder.Services.AddScoped<IAccomodationClassificationRepository, AccomodationClassificationRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+
 
 var app = builder.Build();
 

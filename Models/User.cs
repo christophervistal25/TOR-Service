@@ -1,9 +1,10 @@
-using Microsoft.AspNetCore.Identity;
 using TOR.API.Models;
+using Microsoft.AspNetCore.Identity;
+
 
 public class User:IdentityUser
 {
-    public int Id { get; set; }
+    public override string Id { get; set; } = Guid.NewGuid().ToString();
     public string Firstname { get; set; } = string.Empty;
     public string Middlename { get; set; } = string.Empty;
     public string Lastname { get; set; } = string.Empty;

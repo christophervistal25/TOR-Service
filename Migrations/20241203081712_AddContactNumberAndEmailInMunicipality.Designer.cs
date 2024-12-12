@@ -12,8 +12,8 @@ using TOR.API.Data;
 namespace TOR.API.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20241128154902_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20241203081712_AddContactNumberAndEmailInMunicipality")]
+    partial class AddContactNumberAndEmailInMunicipality
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -24,6 +24,162 @@ namespace TOR.API.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AccomodationClassification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccomodationClassifications");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "HTL",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 17, 11, 860, DateTimeKind.Utc).AddTicks(9060),
+                            Name = "Hotel",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "CON",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 17, 11, 860, DateTimeKind.Utc).AddTicks(9060),
+                            Name = "Condotel",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Code = "SER",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 17, 11, 860, DateTimeKind.Utc).AddTicks(9060),
+                            Name = "Serviced Residence",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Code = "RES",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 17, 11, 860, DateTimeKind.Utc).AddTicks(9070),
+                            Name = "Resort",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Code = "APA",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 17, 11, 860, DateTimeKind.Utc).AddTicks(9070),
+                            Name = "Apartelle",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Code = "MOT",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 17, 11, 860, DateTimeKind.Utc).AddTicks(9070),
+                            Name = "Motel",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Code = "PEN",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 17, 11, 860, DateTimeKind.Utc).AddTicks(9070),
+                            Name = "Pension House",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Code = "HSS",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 17, 11, 860, DateTimeKind.Utc).AddTicks(9070),
+                            Name = "Home Stay Site",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Code = "TIN",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 17, 11, 860, DateTimeKind.Utc).AddTicks(9070),
+                            Name = "Tourist Inn",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Code = "OTH",
+                            DateCreated = new DateTime(2024, 12, 3, 8, 17, 11, 860, DateTimeKind.Utc).AddTicks(9070),
+                            Name = "Others",
+                            Status = "Active"
+                        });
+                });
+
+            modelBuilder.Entity("Establishment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AccomodationClassificationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Contact")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MunicipalityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccomodationClassificationId");
+
+                    b.HasIndex("MunicipalityId");
+
+                    b.ToTable("Establishments");
+                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -50,6 +206,20 @@ namespace TOR.API.Migrations
                         .HasFilter("[NormalizedName] IS NOT NULL");
 
                     b.ToTable("AspNetRoles", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "365d91de-b394-4e7f-a52d-46e5d0adce5f",
+                            Name = "Admin",
+                            NormalizedName = "ADMIN"
+                        },
+                        new
+                        {
+                            Id = "02701c1b-8557-4b98-b107-7a9caf12902e",
+                            Name = "User",
+                            NormalizedName = "USER"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -158,34 +328,6 @@ namespace TOR.API.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("TOR.API.Models.AccomodationClassification", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Code")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AccomodationClassifications");
-                });
-
             modelBuilder.Entity("TOR.API.Models.Comment", b =>
                 {
                     b.Property<int>("Id")
@@ -215,51 +357,6 @@ namespace TOR.API.Migrations
                     b.ToTable("Comment");
                 });
 
-            modelBuilder.Entity("TOR.API.Models.Establishment", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Contact")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MunicipalityId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MunicipalityId");
-
-                    b.ToTable("Establishments");
-                });
-
             modelBuilder.Entity("TOR.API.Models.Municipality", b =>
                 {
                     b.Property<int>("Id")
@@ -287,6 +384,72 @@ namespace TOR.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Municipalities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Contact = "09123456789",
+                            Email = "carrascal@gmai..com",
+                            Name = "Carrascal",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Contact = "09123456789",
+                            Email = "cantilan@gmai..com",
+                            Name = "Cantilan",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Contact = "09123456789",
+                            Email = "madrid@gmai..com",
+                            Name = "Madrid",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Contact = "09123456789",
+                            Email = "carmen@gmai..com",
+                            Name = "Carmen",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Contact = "09123456789",
+                            Email = "lanuza@gmai..com",
+                            Name = "Lanuza",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Contact = "09123456789",
+                            Email = "cortes@gmai..com",
+                            Name = "Cortes",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Contact = "09123456789",
+                            Email = "tandag@gmai..com",
+                            Name = "Tandag City",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Contact = "09123456789",
+                            Email = "tago@gmai..com",
+                            Name = "Tago",
+                            Province = "Surigao del Sur"
+                        });
                 });
 
             modelBuilder.Entity("TOR.API.Models.Stock", b =>
@@ -430,6 +593,25 @@ namespace TOR.API.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Establishment", b =>
+                {
+                    b.HasOne("AccomodationClassification", "AccomodationClassification")
+                        .WithMany()
+                        .HasForeignKey("AccomodationClassificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TOR.API.Models.Municipality", "Municipality")
+                        .WithMany()
+                        .HasForeignKey("MunicipalityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AccomodationClassification");
+
+                    b.Navigation("Municipality");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -490,20 +672,9 @@ namespace TOR.API.Migrations
                     b.Navigation("Stock");
                 });
 
-            modelBuilder.Entity("TOR.API.Models.Establishment", b =>
-                {
-                    b.HasOne("TOR.API.Models.Municipality", "Municipality")
-                        .WithMany()
-                        .HasForeignKey("MunicipalityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Municipality");
-                });
-
             modelBuilder.Entity("User", b =>
                 {
-                    b.HasOne("TOR.API.Models.Establishment", "Establishment")
+                    b.HasOne("Establishment", "Establishment")
                         .WithMany()
                         .HasForeignKey("EstablishmentId");
 

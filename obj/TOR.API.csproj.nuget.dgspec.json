@@ -13,7 +13,6 @@
         "packagesPath": "/Users/surigaodelsur/.nuget/packages/",
         "outputPath": "/Users/surigaodelsur/Desktop/Projects/TOR-service/TOR.API/obj/",
         "projectStyle": "PackageReference",
-        "UsingMicrosoftNETSdk": false,
         "configFilePaths": [
           "/Users/surigaodelsur/.nuget/NuGet/NuGet.Config"
         ],

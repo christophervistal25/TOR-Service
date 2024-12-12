@@ -22,6 +22,172 @@ namespace TOR.API.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("AccomodationClassification", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AccomodationClassifications");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "HTL",
+                            DateCreated = new DateTime(2024, 12, 12, 14, 26, 19, 368, DateTimeKind.Utc).AddTicks(2610),
+                            Name = "Hotel",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "CON",
+                            DateCreated = new DateTime(2024, 12, 12, 14, 26, 19, 368, DateTimeKind.Utc).AddTicks(2620),
+                            Name = "Condotel",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Code = "SER",
+                            DateCreated = new DateTime(2024, 12, 12, 14, 26, 19, 368, DateTimeKind.Utc).AddTicks(2620),
+                            Name = "Serviced Residence",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Code = "RES",
+                            DateCreated = new DateTime(2024, 12, 12, 14, 26, 19, 368, DateTimeKind.Utc).AddTicks(2620),
+                            Name = "Resort",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Code = "APA",
+                            DateCreated = new DateTime(2024, 12, 12, 14, 26, 19, 368, DateTimeKind.Utc).AddTicks(2620),
+                            Name = "Apartelle",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Code = "MOT",
+                            DateCreated = new DateTime(2024, 12, 12, 14, 26, 19, 368, DateTimeKind.Utc).AddTicks(2620),
+                            Name = "Motel",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Code = "PEN",
+                            DateCreated = new DateTime(2024, 12, 12, 14, 26, 19, 368, DateTimeKind.Utc).AddTicks(2620),
+                            Name = "Pension House",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Code = "HSS",
+                            DateCreated = new DateTime(2024, 12, 12, 14, 26, 19, 368, DateTimeKind.Utc).AddTicks(2620),
+                            Name = "Home Stay Site",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Code = "TIN",
+                            DateCreated = new DateTime(2024, 12, 12, 14, 26, 19, 368, DateTimeKind.Utc).AddTicks(2630),
+                            Name = "Tourist Inn",
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Code = "OTH",
+                            DateCreated = new DateTime(2024, 12, 12, 14, 26, 19, 368, DateTimeKind.Utc).AddTicks(2630),
+                            Name = "Others",
+                            Status = "Active"
+                        });
+                });
+
+            modelBuilder.Entity("Establishment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("AEIDCode")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccomodationClassificationId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Contact")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("MunicipalityId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AEIDCode")
+                        .IsUnique()
+                        .HasFilter("[AEIDCode] IS NOT NULL");
+
+                    b.HasIndex("AccomodationClassificationId");
+
+                    b.HasIndex("MunicipalityId");
+
+                    b.ToTable("Establishments");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -51,13 +217,13 @@ namespace TOR.API.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f3258617-f5e3-4f63-9158-8766f15d65d1",
+                            Id = "343e5eef-cb91-4a37-8b3c-ebb450c08172",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "5424a303-29d8-496e-9128-3616a507b9b3",
+                            Id = "2412076d-5641-4922-a77e-59ccada9590d",
                             Name = "User",
                             NormalizedName = "USER"
                         });
@@ -169,7 +335,7 @@ namespace TOR.API.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("TOR.API.Models.AccomodationClassification", b =>
+            modelBuilder.Entity("TOR.API.Models.Country", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -177,27 +343,533 @@ namespace TOR.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Code")
+                    b.Property<string>("Continent")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Status")
+                    b.Property<string>("Region")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("AccomodationClassifications");
+                    b.ToTable("Countries");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2420),
+                            Name = "BRUNEI",
+                            Region = "ASEAN"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2460),
+                            Name = "CAMBODIA",
+                            Region = "ASEAN"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2460),
+                            Name = "INDONESIA",
+                            Region = "ASEAN"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2460),
+                            Name = "LAOS",
+                            Region = "ASEAN"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2460),
+                            Name = "MALAYSIA",
+                            Region = "ASEAN"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2470),
+                            Name = "MYANMAR",
+                            Region = "ASEAN"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2470),
+                            Name = "SINGAPORE",
+                            Region = "ASEAN"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2470),
+                            Name = "THAILAND",
+                            Region = "ASEAN"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2470),
+                            Name = "VIETNAM",
+                            Region = "ASEAN"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2470),
+                            Name = "CHINA",
+                            Region = "EAST ASIA"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2470),
+                            Name = "HONGKONG",
+                            Region = "EAST ASIA"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2480),
+                            Name = "JAPAN",
+                            Region = "EAST ASIA"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2480),
+                            Name = "KOREA",
+                            Region = "EAST ASIA"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2480),
+                            Name = "TAIWAN",
+                            Region = "EAST ASIA"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2480),
+                            Name = "BANGLADESH",
+                            Region = "SOUTH ASIA"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2480),
+                            Name = "INDIA",
+                            Region = "SOUTH ASIA"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2480),
+                            Name = "IRAN",
+                            Region = "SOUTH ASIA"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2480),
+                            Name = "NEPAL",
+                            Region = "SOUTH ASIA"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2490),
+                            Name = "PAKISTAN",
+                            Region = "SOUTH ASIA"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2490),
+                            Name = "SRI LANKA",
+                            Region = "SOUTH ASIA"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2490),
+                            Name = "BAHRAIN",
+                            Region = "MIDDLE EAST"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2490),
+                            Name = "EGYPT",
+                            Region = "MIDDLE EAST"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2490),
+                            Name = "ISRAEL",
+                            Region = "MIDDLE EAST"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2490),
+                            Name = "JORDAN",
+                            Region = "MIDDLE EAST"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2490),
+                            Name = "KUWAIT",
+                            Region = "MIDDLE EAST"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2490),
+                            Name = "SAUDI ARABIA",
+                            Region = "MIDDLE EAST"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            Continent = "ASIA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2500),
+                            Name = "UNITED ARAB EMIRATES",
+                            Region = "MIDDLE EAST"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            Continent = "AMERICA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2500),
+                            Name = "CANADA",
+                            Region = "NORTH AMERICA"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            Continent = "AMERICA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2500),
+                            Name = "MEXICO",
+                            Region = "NORTH AMERICA"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            Continent = "AMERICA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2500),
+                            Name = "USA",
+                            Region = "NORTH AMERICA"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            Continent = "AMERICA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2500),
+                            Name = "ARGENTINA",
+                            Region = "SOUTH AMERICA"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            Continent = "AMERICA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2500),
+                            Name = "BRAZIL",
+                            Region = "SOUTH AMERICA"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            Continent = "AMERICA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2500),
+                            Name = "COLOMBIA",
+                            Region = "SOUTH AMERICA"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            Continent = "AMERICA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2510),
+                            Name = "PERU",
+                            Region = "SOUTH AMERICA"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            Continent = "AMERICA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2510),
+                            Name = "VENEZUELA",
+                            Region = "SOUTH AMERICA"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2520),
+                            Name = "AUSTRIA",
+                            Region = "WESTERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2520),
+                            Name = "BELGIUM",
+                            Region = "WESTERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2520),
+                            Name = "FRANCE",
+                            Region = "WESTERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2520),
+                            Name = "GERMANY",
+                            Region = "WESTERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2520),
+                            Name = "LUXEMBOURG",
+                            Region = "WESTERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2520),
+                            Name = "NETHERLANDS",
+                            Region = "WESTERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2520),
+                            Name = "SWITZERLAND",
+                            Region = "WESTERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2520),
+                            Name = "DENMARK",
+                            Region = "NORTHERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2530),
+                            Name = "FINLAND",
+                            Region = "NORTHERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2530),
+                            Name = "IRELAND",
+                            Region = "NORTHERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2530),
+                            Name = "NORWAY",
+                            Region = "NORTHERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2530),
+                            Name = "SWEDEN",
+                            Region = "NORTHERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 48,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2530),
+                            Name = "UNITED KINGDOM",
+                            Region = "NORTHERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 49,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2530),
+                            Name = "GREECE",
+                            Region = "SOUTHERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 50,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2530),
+                            Name = "ITALY",
+                            Region = "SOUTHERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 51,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2530),
+                            Name = "PORTUGAL",
+                            Region = "SOUTHERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 52,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2540),
+                            Name = "SPAIN",
+                            Region = "SOUTHERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 53,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2540),
+                            Name = "UNION OF SERBIA AND MONTENEGRO",
+                            Region = "SOUTHERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 54,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2540),
+                            Name = "COMMONWEALTH OF INDEPENDENT STATES",
+                            Region = "EASTERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 55,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2540),
+                            Name = "POLAND",
+                            Region = "EASTERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 56,
+                            Continent = "EUROPE",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2540),
+                            Name = "RUSSIA",
+                            Region = "EASTERN EUROPE"
+                        },
+                        new
+                        {
+                            Id = 57,
+                            Continent = "AUSTRALASIA/PACIFIC",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2540),
+                            Name = "AUSTRALIA",
+                            Region = "AUSTRALASIA/PACIFIC"
+                        },
+                        new
+                        {
+                            Id = 58,
+                            Continent = "AUSTRALASIA/PACIFIC",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2540),
+                            Name = "GUAM",
+                            Region = "AUSTRALASIA/PACIFIC"
+                        },
+                        new
+                        {
+                            Id = 59,
+                            Continent = "AUSTRALASIA/PACIFIC",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2550),
+                            Name = "NAURU",
+                            Region = "AUSTRALASIA/PACIFIC"
+                        },
+                        new
+                        {
+                            Id = 60,
+                            Continent = "AUSTRALASIA/PACIFIC",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2550),
+                            Name = "NEW ZEALAND",
+                            Region = "AUSTRALASIA/PACIFIC"
+                        },
+                        new
+                        {
+                            Id = 61,
+                            Continent = "AUSTRALASIA/PACIFIC",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2550),
+                            Name = "PAPUA NEW GUINEA",
+                            Region = "AUSTRALASIA/PACIFIC"
+                        },
+                        new
+                        {
+                            Id = 62,
+                            Continent = "AFRICA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2550),
+                            Name = "NIGERIA",
+                            Region = "AFRICA"
+                        },
+                        new
+                        {
+                            Id = 63,
+                            Continent = "AFRICA",
+                            CreatedAt = new DateTime(2024, 12, 12, 22, 26, 19, 368, DateTimeKind.Local).AddTicks(2550),
+                            Name = "SOUTH AFRICA",
+                            Region = "AFRICA"
+                        });
                 });
 
-            modelBuilder.Entity("TOR.API.Models.Comment", b =>
+            modelBuilder.Entity("TOR.API.Models.DAE1A", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -205,28 +877,82 @@ namespace TOR.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Content")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int?>("StockId")
+                    b.Property<int>("AvailableRooms")
                         .HasColumnType("int");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("AverageGuestNight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("AverageNumberOfGuestPerRoom")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("AverageRoomOccupancyRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CreatedById")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("EstablishmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("StockId");
+                    b.HasIndex("CreatedById");
 
-                    b.ToTable("Comment");
+                    b.HasIndex("EstablishmentId");
+
+                    b.ToTable("DAE1As");
                 });
 
-            modelBuilder.Entity("TOR.API.Models.Establishment", b =>
+            modelBuilder.Entity("TOR.API.Models.DAE1ADetail", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DAE1AId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Day")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GuestCheckedIn")
+                        .HasColumnType("int");
+
+                    b.Property<int>("GuestNight")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomNumber")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomsOccupiedByGuest")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("DAE1AId");
+
+                    b.ToTable("DAE1ADetails");
+                });
+
+            modelBuilder.Entity("TOR.API.Models.DAE1B", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -234,41 +960,164 @@ namespace TOR.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Address")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Contact")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("MunicipalityId")
+                    b.Property<int>("CreatedById")
                         .HasColumnType("int");
 
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<string>("CreatedById1")
+                        .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("DAE1AId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("EstablishmentId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Month")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NonPhilippineResidences")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OthersUnspecified")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OverSeasFilipinos")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PhilippinesResidentFilipinoNationality")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PhilippinesResidentForeignNationality")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalGuestWithUnspecifiedResidence")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalNonPhilippinesResident")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalOverseasFilipinos")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalPhilippinesResident")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Year")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("MunicipalityId");
+                    b.HasIndex("CreatedById1");
 
-                    b.ToTable("Establishments");
+                    b.HasIndex("DAE1AId");
+
+                    b.HasIndex("EstablishmentId");
+
+                    b.ToTable("DAE1Bs");
+                });
+
+            modelBuilder.Entity("TOR.API.Models.DAE1BDetail", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("CountryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DAE1BId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CountryId");
+
+                    b.HasIndex("DAE1BId");
+
+                    b.ToTable("DAE1BDetails");
+                });
+
+            modelBuilder.Entity("TOR.API.Models.DAE2", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<decimal>("AverageLengthOfStayNights")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("AverageMonthlyOccupancyRate")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DAE1BId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomsAvailableForTheMonth")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RoomsOccupied")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TotalGuestNights")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DAE1BId");
+
+                    b.ToTable("DAE2s");
+                });
+
+            modelBuilder.Entity("TOR.API.Models.DAE2VolumePerSex", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("DAE2Id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Gender")
+                        .HasColumnType("int");
+
+                    b.Property<int>("NonPhilippineForeignResidents")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OtherUnspecifiedGuest")
+                        .HasColumnType("int");
+
+                    b.Property<int>("OverseasFilipinos")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PhilippineResidents")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Total")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DAE2Id");
+
+                    b.ToTable("DAE2VolumePerSexes");
                 });
 
             modelBuilder.Entity("TOR.API.Models.Municipality", b =>
@@ -298,9 +1147,155 @@ namespace TOR.API.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Municipalities");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Contact = "09123456789",
+                            Email = "carrascal@gmail.com",
+                            Name = "Carrascal",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Contact = "09123456789",
+                            Email = "cantilan@gmail.com",
+                            Name = "Cantilan",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Contact = "09123456789",
+                            Email = "madrid@gmail.com",
+                            Name = "Madrid",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Contact = "09123456789",
+                            Email = "carmen@gmail.com",
+                            Name = "Carmen",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Contact = "09123456789",
+                            Email = "lanuza@gmail.com",
+                            Name = "Lanuza",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Contact = "09123456789",
+                            Email = "cortes@gmail.com",
+                            Name = "Cortes",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Contact = "09123456789",
+                            Email = "tandag@gmail.com",
+                            Name = "Tandag City",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Contact = "09123456789",
+                            Email = "tago@gmail.com",
+                            Name = "Tago",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Contact = "09123456789",
+                            Email = "lingig@gmail.com",
+                            Name = "Lingig",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Contact = "09123456789",
+                            Email = "tagbina@gmail.com",
+                            Name = "Tagbina",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Contact = "09123456789",
+                            Email = "bislig@gmail.com",
+                            Name = "Bislig",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Contact = "09123456789",
+                            Email = "marihatag@gmail.com",
+                            Name = "Marihatag",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Contact = "09123456789",
+                            Email = "cagwait@gmail.com",
+                            Name = "Cagwait",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Contact = "09123456789",
+                            Email = "bayabas@gmail.com",
+                            Name = "Bayabas",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Contact = "09123456789",
+                            Email = "lianga@gmail.com",
+                            Name = "Lianga",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Contact = "09123456789",
+                            Email = "hinatuan@gmail.com",
+                            Name = "Hinatuan",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Contact = "09123456789",
+                            Email = "carmen@gmail.com",
+                            Name = "Carmen",
+                            Province = "Surigao del Sur"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Contact = "09123456789",
+                            Email = "barobo@gmail.com",
+                            Name = "Barobo",
+                            Province = "Surigao del Sur"
+                        });
                 });
 
-            modelBuilder.Entity("TOR.API.Models.Stock", b =>
+            modelBuilder.Entity("TOR.API.Models.Setting", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -308,30 +1303,20 @@ namespace TOR.API.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("CompanyName")
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("KeyName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Industry")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<decimal>("LastDiv")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<long>("MarketCap")
-                        .HasColumnType("bigint");
-
-                    b.Property<decimal>("Purchase")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<string>("Symbol")
+                    b.Property<string>("KeyValue")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Stocks");
+                    b.ToTable("Settings");
                 });
 
             modelBuilder.Entity("User", b =>
@@ -426,7 +1411,9 @@ namespace TOR.API.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EstablishmentId");
+                    b.HasIndex("EstablishmentId")
+                        .IsUnique()
+                        .HasFilter("[EstablishmentId] IS NOT NULL");
 
                     b.HasIndex("MunicipalityId");
 
@@ -439,6 +1426,25 @@ namespace TOR.API.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("Establishment", b =>
+                {
+                    b.HasOne("AccomodationClassification", "AccomodationClassification")
+                        .WithMany()
+                        .HasForeignKey("AccomodationClassificationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TOR.API.Models.Municipality", "Municipality")
+                        .WithMany()
+                        .HasForeignKey("MunicipalityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AccomodationClassification");
+
+                    b.Navigation("Municipality");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -492,31 +1498,103 @@ namespace TOR.API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TOR.API.Models.Comment", b =>
+            modelBuilder.Entity("TOR.API.Models.DAE1A", b =>
                 {
-                    b.HasOne("TOR.API.Models.Stock", "Stock")
-                        .WithMany("Comments")
-                        .HasForeignKey("StockId");
+                    b.HasOne("User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
 
-                    b.Navigation("Stock");
+                    b.HasOne("Establishment", "Establishment")
+                        .WithMany()
+                        .HasForeignKey("EstablishmentId");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("Establishment");
                 });
 
-            modelBuilder.Entity("TOR.API.Models.Establishment", b =>
+            modelBuilder.Entity("TOR.API.Models.DAE1ADetail", b =>
                 {
-                    b.HasOne("TOR.API.Models.Municipality", "Municipality")
+                    b.HasOne("TOR.API.Models.DAE1A", "DAE1A")
                         .WithMany()
-                        .HasForeignKey("MunicipalityId")
+                        .HasForeignKey("DAE1AId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Municipality");
+                    b.Navigation("DAE1A");
+                });
+
+            modelBuilder.Entity("TOR.API.Models.DAE1B", b =>
+                {
+                    b.HasOne("User", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById1");
+
+                    b.HasOne("TOR.API.Models.DAE1A", "DAE1A")
+                        .WithMany()
+                        .HasForeignKey("DAE1AId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Establishment", "Establishment")
+                        .WithMany()
+                        .HasForeignKey("EstablishmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("DAE1A");
+
+                    b.Navigation("Establishment");
+                });
+
+            modelBuilder.Entity("TOR.API.Models.DAE1BDetail", b =>
+                {
+                    b.HasOne("TOR.API.Models.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TOR.API.Models.DAE1B", "DAE1B")
+                        .WithMany()
+                        .HasForeignKey("DAE1BId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Country");
+
+                    b.Navigation("DAE1B");
+                });
+
+            modelBuilder.Entity("TOR.API.Models.DAE2", b =>
+                {
+                    b.HasOne("TOR.API.Models.DAE1B", "DAE1B")
+                        .WithMany()
+                        .HasForeignKey("DAE1BId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DAE1B");
+                });
+
+            modelBuilder.Entity("TOR.API.Models.DAE2VolumePerSex", b =>
+                {
+                    b.HasOne("TOR.API.Models.DAE2", "DAE2")
+                        .WithMany()
+                        .HasForeignKey("DAE2Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("DAE2");
                 });
 
             modelBuilder.Entity("User", b =>
                 {
-                    b.HasOne("TOR.API.Models.Establishment", "Establishment")
-                        .WithMany()
-                        .HasForeignKey("EstablishmentId");
+                    b.HasOne("Establishment", "Establishment")
+                        .WithOne("CreatedBy")
+                        .HasForeignKey("User", "EstablishmentId");
 
                     b.HasOne("TOR.API.Models.Municipality", "Municipality")
                         .WithMany()
@@ -527,9 +1605,10 @@ namespace TOR.API.Migrations
                     b.Navigation("Municipality");
                 });
 
-            modelBuilder.Entity("TOR.API.Models.Stock", b =>
+            modelBuilder.Entity("Establishment", b =>
                 {
-                    b.Navigation("Comments");
+                    b.Navigation("CreatedBy")
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

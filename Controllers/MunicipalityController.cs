@@ -63,7 +63,7 @@ public class MunicipalityController : ControllerBase
     {
         var Municipality = municipality.MunicipalityDTOtoMunicipality();
         await _municipalityRepository.AddAsync(Municipality);
-        return CreatedAtAction(nameof(GetById), new { id = municipality.Id }, Municipality);
+        return Ok(Municipality.MunicipalityToDTO());
     }
     
     [HttpPut]

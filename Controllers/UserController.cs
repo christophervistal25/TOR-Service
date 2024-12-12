@@ -46,23 +46,32 @@ public class UserController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetById(int id)
+    public async Task<IActionResult> GetById(string id)
     {
         var user = await _userRepository.GetByIdAsync(id);
         if (user == null) return NotFound();
         return Ok(user.ToDTO());
     }
-
+    
+    [HttpGet("email/{email}")]
+    public async Task<IActionResult> GetByEmail(string email)
+    {
+        var user = await _userRepository.GetByEmailAsync(email);
+        if (user == null) return NotFound();
+        return Ok(user.ToDTO());
+    }
+    
     
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] UserDTO userDTO)
     {
+        userDTO.Id = Guid.NewGuid().ToString();
         var user = await _userRepository.AddAsync(userDTO.ToEntity());
         return CreatedAtAction(nameof(GetById), new { id = user.Id }, user.ToDTO());
     }
     
     [HttpPut("{id}")]
-    public async Task<IActionResult> Update(int id, [FromBody] UserDTO userDTO)
+    public async Task<IActionResult> Update(string id, [FromBody] UserDTO userDTO)
     {
         var user = userDTO.ToEntity();
         var updatedUser = await _userRepository.UpdateAsync(id, user);
@@ -71,7 +80,7 @@ public class UserController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(string id)
     {
         var user = await _userRepository.DeleteAsync(id);
         if (user == null) return NotFound();

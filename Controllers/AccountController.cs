@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,25 +16,26 @@ public class AccountController : ControllerBase
     private readonly ITokenService _tokenService;
     private readonly SignInManager<User> _signInManager;
 
-    public AccountController(UserManager<User> userManager, ITokenService tokenService, SignInManager<User> signInManager)
+    public AccountController(UserManager<User> userManager, ITokenService tokenService,
+        SignInManager<User> signInManager)
     {
         _userManager = userManager;
         _tokenService = tokenService;
         _signInManager = signInManager;
     }
 
-    
+
     [HttpPost("login")]
     public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
     {
         try
         {
-            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == loginDTO.Email);
+            var user = await _userManager.Users.Include(m => m.Municipality).FirstOrDefaultAsync(x => x.Email == loginDTO.Email);
             if (user == null)
             {
                 return Unauthorized("Invalid email or password");
             }
-    
+
             var result = _signInManager.CheckPasswordSignInAsync(user, loginDTO.Password, false);
             if (!result.Result.Succeeded)
             {
@@ -44,6 +46,7 @@ public class AccountController : ControllerBase
             {
                 Email = user.Email,
                 Username = user.UserName,
+                AccountType = user.AccountType,
                 Token = _tokenService.CreateToken(user)
             });
         }
@@ -52,8 +55,34 @@ public class AccountController : ControllerBase
             return StatusCode(500, $"Internal server error: {ex.Message}");
         }
     }
-    
-    
+
+    [HttpPost("validate")]
+    public async Task<IActionResult> ValidateToken([FromBody] ValidateTokenDTO validateToken)
+    {
+        try
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == validateToken.Email);
+            if (user == null)
+            {
+                return Unauthorized("Invalid email or password");
+            }
+
+            var result = _tokenService.ValidateToken(validateToken.Token);
+            if (!result)
+            {
+                return Unauthorized("Invalid token");
+            }
+            else
+            {
+                return Ok();
+            }
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
+
     
     [HttpPost("register")]
     public async Task<IActionResult> Register([FromBody] RegisterDTO registerDTO)
@@ -76,13 +105,13 @@ public class AccountController : ControllerBase
                 EstablishmentId = registerDTO.EstablishmentId
             };
 
-            
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            
-            
+
+
             var result = await _userManager.CreateAsync(user, registerDTO.Password);
             if (!result.Succeeded)
             {
@@ -91,7 +120,7 @@ public class AccountController : ControllerBase
             else
             {
                 var roleResult = await _userManager.AddToRoleAsync(user, registerDTO.AccountType);
-                if(roleResult.Succeeded)
+                if (roleResult.Succeeded)
                 {
                     return Ok(new NewUserDTO()
                     {
@@ -105,7 +134,56 @@ public class AccountController : ControllerBase
                     return StatusCode(500, roleResult.Errors);
                 }
             }
-            
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
+
+    [Authorize]
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout([FromBody] LogoutDTO logoutDto)
+    {
+        try
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == logoutDto.Email);
+
+            if (user == null)
+            {
+                return Unauthorized("User not found");
+            }
+
+            await _signInManager.SignOutAsync();
+            return Ok();
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"Internal server error: {ex.Message}");
+        }
+    }
+    
+    // route for decoding token
+    [HttpPost("decode")]
+    public async Task<IActionResult> DecodeToken([FromBody] DecodeTokenDTO decodeToken)
+    {
+        try
+        {
+            var user = await _userManager.Users.FirstOrDefaultAsync(x => x.Email == decodeToken.Email);
+            if (user == null)
+            {
+                return Unauthorized("Invalid email or password");
+            }
+
+            var result = _tokenService.DecodeToken(decodeToken.Token);
+            if (result == null)
+            {
+                return Unauthorized("Invalid token");
+            }
+            else
+            {
+                return Ok(result);
+            }
         }
         catch (Exception ex)
         {
